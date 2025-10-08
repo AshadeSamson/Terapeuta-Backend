@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import paymentGateway from './routes/paymentRoute';
+
 
 dotenv.config();
 
@@ -11,10 +13,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Sample route
-app.get('/', (req: Request, res: Response) => {
-    res.send('This is the payment service for the terapeuta app!');
-});
+// Routes
+app.use('/tp/payments', paymentGateway);
 
 // Start server
 app.listen(PORT, () => {
