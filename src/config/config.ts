@@ -6,4 +6,6 @@ export const {
     FIREBASE_CLIENT_EMAIL, 
     FIREBASE_PRIVATE_KEY,
     STRIPE_SECRET_KEY,
+    CLIENT_URL,
+    PORT,
 } = process.env;
