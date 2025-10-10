@@ -14,7 +14,8 @@ const stripe = new Stripe(STRIPE_SECRET_KEY);
 export const createPayment = async (req: Request, res: Response) => {
 
     try {
-        const { bookingDetails, userID } = req.body;
+
+        const { therapyType } = req.body;
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             mode: 'payment',
@@ -22,7 +23,7 @@ export const createPayment = async (req: Request, res: Response) => {
                 price_data: {
                     currency: 'usd',
                     product_data: {
-                        name: `Payment for ${bookingDetails.therapyType} virtual therapy session`,
+                        name: `Payment for ${therapyType} virtual therapy session`,
                     },
                     unit_amount: 2000 * 100,
                 },
@@ -32,14 +33,18 @@ export const createPayment = async (req: Request, res: Response) => {
             success_url: `${CLIENT_URL}/payment-successful`,
             cancel_url: `${CLIENT_URL}/payment-cancelled`,
             metadata: {
-                userID,
-                ...bookingDetails,
-            }
+                ...req.body,
+                timing: new Date().toISOString()
+                }
         });
 
         return res.status(200).json({ url: session.url });
-    } catch (error) {
-        res.status(500).json({ error: 'Unable to create payment session' });
+        
+    } catch (error: Error | any) {
+        res.status(500).json({
+        error: true,
+        message: 'Internal Server Error'
+    });
     }
 
 };
