@@ -8,4 +8,5 @@ export const {
     STRIPE_SECRET_KEY,
     CLIENT_URL,
     PORT,
+    STRIPE_WEBHOOK_SECRET
 } = process.env;
