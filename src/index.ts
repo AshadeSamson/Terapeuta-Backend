@@ -2,6 +2,8 @@ import express, { Application } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import paymentGateway from './routes/paymentRoute';
+import webhookRoute from './routes/webhookRoute';
+import  bodyParser  from 'body-parser';
 
 
 dotenv.config();
@@ -11,6 +13,15 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
+
+
+app.use(
+  '/tp/payments/webhook',
+  bodyParser.raw({ type: 'application/json' }),
+  webhookRoute
+);
+
+// Middleware to parse JSON bodies
 app.use(express.json());
 
 // Routes

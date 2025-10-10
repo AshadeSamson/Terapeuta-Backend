@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { db } from "../config/firebase";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY, CLIENT_URL } from "../config/config";
 
@@ -39,7 +38,7 @@ export const createPayment = async (req: Request, res: Response) => {
         });
 
         return res.status(200).json({ url: session.url });
-        
+
     } catch (error: Error | any) {
         res.status(500).json({
         error: true,
