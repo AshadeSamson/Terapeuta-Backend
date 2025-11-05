@@ -24,7 +24,7 @@ export const createPayment = async (req: Request, res: Response) => {
                     product_data: {
                         name: `Payment for ${therapyType} virtual therapy session`,
                     },
-                    unit_amount: 2000 * 100,
+                    unit_amount: 100 * 100,
                 },
                 quantity: 1,
                
